@@ -1,9 +1,12 @@
 {
-  "name": "odysseus-cli",
+  "name": "odysseus-cli-dev",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "odysseus-cli-dev": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/cli.js",
