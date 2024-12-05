@@ -1,0 +1,41 @@
+{
+  "name": "odysseus-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "test": "mocha --require ts-node/register tests/**/*.test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.8",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "fs": "^0.0.1-security",
+    "inquirer": "^12.1.0",
+    "open": "^10.1.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^5.0.1",
+    "@types/express": "^5.0.0",
+    "@types/inquirer": "^9.0.7",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.1",
+    "@types/sinon": "^17.0.3",
+    "@types/ws": "^8.5.13",
+    "chai": "^5.1.2",
+    "mocha": "^11.0.1",
+    "sinon": "^19.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
