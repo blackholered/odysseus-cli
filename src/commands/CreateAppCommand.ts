@@ -36,7 +36,7 @@ export class CreateAppCommand implements CommandInterface {
             const selectedWebsite = await this.websiteService.promptWebsiteSelection(websites);
 
             const type = await this.appService.promptAppType();
-            const app = await this.appService.createApp(selectedWebsite.domain.name, type);
+            const app = await this.appService.createApp(selectedWebsite.name, type);
 
             const appFields = this.appService.getFields(type, app);
             await this.appService.updateFields(app.id, appFields, app);
