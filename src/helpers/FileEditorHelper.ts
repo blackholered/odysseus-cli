@@ -1,31 +1,32 @@
-import {exec} from 'child_process';
-import util from 'util';
-import chalk from 'chalk';
+import {spawn} from 'child_process';
 import {logger} from "../utils/logger.js";
-
-const execPromise = util.promisify(exec);
 
 export class FileEditorHelper {
     /**
-     * Opens the specified file in the system's default editor.
+     * Opens the specified file in the system's default editor and waits for it to close.
      * @param filePath The path to the file to open.
      */
-    async openFileInEditor(filePath: string): Promise<void> {
-        const isWindows = process.platform === 'win32';
-        const editor = process.env.EDITOR || (isWindows ? 'notepad' : 'nano');
+    openFileInEditor(filePath: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const editor = process.env.EDITOR || (process.platform === 'win32' ? 'notepad' : 'nano');
+            logger.info(`Opening with editor: ${editor}`);
 
-        try {
-            if (isWindows) {
-                await execPromise(`start ${editor} ${filePath}`, {shell: 'cmd.exe'});
-            } else {
-                await execPromise(`${editor} ${filePath}`);
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                logger.error('Error opening file in editor:');
-            } else {
-                logger.error('Unknown error occurred while opening editor.');
-            }
-        }
+            const child = spawn(editor, [filePath], {
+                stdio: 'inherit',
+                shell: process.platform === 'win32',
+            });
+
+            child.on('exit', (code) => {
+                if (code === 0) {
+                    resolve();
+                } else {
+                    reject(new Error(`Editor exited with code ${code}`));
+                }
+            });
+
+            child.on('error', (err) => {
+                reject(err);
+            });
+        });
     }
 }
