@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "bin": {
+    "odysseus-cli": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/cli.js",
