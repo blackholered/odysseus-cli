@@ -23,7 +23,7 @@ export class AppService {
                 type: 'list',
                 name: 'type',
                 message: 'Select the app type:',
-                choices: ['laravel', 'react'],
+                choices: ['laravel', 'react', 'angular', 'svelte'],
             },
         ]);
         return type;
@@ -102,7 +102,28 @@ export class AppService {
             async (appId: string) => logger.info('Handling React-specific tasks...'),
         ];
 
-        return type === 'laravel' ? laravelSteps : reactSteps;
+        const angularSteps = [
+            ...commonSteps,
+            async (appId: string) => logger.info('Handling Angular-specific tasks...'),
+        ];
+
+        const svelteSteps = [
+            ...commonSteps,
+            async (appId: string) => logger.info('Handling Svelte-specific tasks...'),
+        ];
+
+        switch (type) {
+            case 'laravel':
+                return laravelSteps;
+            case 'react':
+                return reactSteps;
+            case 'angular':
+                return angularSteps;
+            case 'svelte':
+                return svelteSteps;
+            default:
+                return commonSteps;
+        }
     }
 
     async getApp(appId: string): Promise<any> {

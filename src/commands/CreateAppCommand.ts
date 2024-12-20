@@ -1,9 +1,9 @@
-import {Command} from 'commander';
-import {WebsiteService} from '../services/WebsiteService.js';
-import {AppService} from '../services/AppService.js';
-import {AuthorizationHandler} from '../handlers/AuthorizationHandler.js';
-import {logger} from '../utils/logger.js';
-import {CommandInterface} from "./contracts/CommandInterface.js";
+import { Command } from 'commander';
+import { WebsiteService } from '../services/WebsiteService.js';
+import { AppService } from '../services/AppService.js';
+import { AuthorizationHandler } from '../handlers/AuthorizationHandler.js';
+import { logger } from '../utils/logger.js';
+import { CommandInterface } from "./contracts/CommandInterface.js";
 
 export class CreateAppCommand implements CommandInterface {
     private websiteService: WebsiteService;
@@ -44,13 +44,13 @@ export class CreateAppCommand implements CommandInterface {
             const steps = this.appService.getSteps(type);
             await this.appService.executeSteps(steps, app);
 
-            if (type === 'react') {
+            if (['react', 'angular', 'svelte'].includes(type)) {
                 await this.appService.editEnv(app.id);
             }
 
             logger.success('App creation process completed successfully!');
 
-            if (type === 'react' || type === 'laravel') {
+            if (['react', 'laravel', 'angular', 'svelte'].includes(type)) {
                 logger.info('Checking installation status for OAuth authorization...');
                 await this.appService.checkInstallationStatus(app.id);
             }
